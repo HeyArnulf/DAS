@@ -1,0 +1,714 @@
+>>EJEMPLOS DE CONTROLES WPF<<
+
+CONTROL DE VENTANA.
+
+1. Botón de Guardar y Botón de Cerrar
+
+XAML:
+
+<Window x:Class="NoteTakingApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Note Taking App" Width="400" Height="300">
+    
+    <Grid>
+        <TextBox x:Name="NoteTextBox" VerticalAlignment="Top" Margin="10" Height="200"/>
+        
+        <Button Content="Guardar" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10"
+                Click="GuardarButton_Click"/>
+        
+        <Button Content="Cerrar" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10"
+                Click="CerrarButton_Click"/>
+    </Grid>
+</Window>
+
+C#:
+
+using System.Windows;
+
+namespace NoteTakingApp
+{
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        private void GuardarButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Implementar el código para guardar la nota en la base de datos o archivo.
+        }
+
+        private void CerrarButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close(); // Cierra la ventana.
+        }
+    }
+}
+
+2. Reproductor Multimedia con Control de Volumen y Barra de Progreso
+
+XAML:
+
+<Window x:Class="MediaPlayerApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Media Player" Width="600" Height="400">
+    
+    <Grid>
+        <MediaElement x:Name="MediaPlayer" VerticalAlignment="Top" Margin="10"/>
+        
+        <Slider x:Name="VolumeSlider" VerticalAlignment="Bottom" Margin="10"
+                Minimum="0" Maximum="1" Value="0.5"/>
+        
+        <ProgressBar x:Name="PlaybackProgressBar" VerticalAlignment="Bottom" Margin="10"/>
+    </Grid>
+</Window>
+
+C#:
+
+using System;
+using System.Windows;
+using System.Windows.Threading;
+
+namespace MediaPlayerApp
+{
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+            
+            // Asignar evento para actualizar la barra de progreso.
+            MediaPlayer.MediaOpened += MediaPlayer_MediaOpened;
+        }
+
+        private void MediaPlayer_MediaOpened(object sender, RoutedEventArgs e)
+        {
+            // Inicializar la barra de progreso con la duración del contenido multimedia.
+            PlaybackProgressBar.Maximum = MediaPlayer.NaturalDuration.TimeSpan.TotalSeconds;
+
+            // Configurar el temporizador para actualizar la barra de progreso.
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += Timer_Tick;
+            timer.Start();
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            // Actualizar la posición actual en la barra de progreso.
+            PlaybackProgressBar.Value = MediaPlayer.Position.TotalSeconds;
+        }
+
+        private void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            // Ajustar el volumen del reproductor multimedia.
+            MediaPlayer.Volume = VolumeSlider.Value;
+        }
+    }
+}
+
+CONTROL DE DISEÑO
+
+1. Diseño de Lista de Tareas con Grid
+
+En este ejemplo, utilizamos un Grid para organizar una lista de tareas. Cada tarea consta de un título y una descripción. El diseño se configura utilizando filas y columnas en el Grid.
+
+XAML:
+
+<Window x:Class="TaskManagerApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Task Manager" Width="400" Height="300">
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <TextBlock Text="Lista de Tareas" FontSize="18" HorizontalAlignment="Center" Margin="10"/>
+        
+        <ListBox Grid.Row="1" Name="TaskListBox" Margin="10">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Title}" FontSize="16"/>
+                        <TextBlock Text="{Binding Description}" Foreground="Gray"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</Window>
+
+C#:
+
+using System.Collections.Generic;
+using System.Windows;
+
+namespace TaskManagerApp
+{
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+            LoadTasks();
+        }
+
+        private void LoadTasks()
+        {
+            List<Task> tasks = new List<Task>
+            {
+                new Task { Title = "Comprar víveres", Description = "Leche, pan, huevos" },
+                new Task { Title = "Hacer ejercicio", Description = "Ir al gimnasio" },
+                new Task { Title = "Llamar a mamá", Description = "Chequear cómo está" }
+            };
+
+            TaskListBox.ItemsSource = tasks;
+        }
+    }
+
+    public class Task
+    {
+        public string Title { get; set; }
+        public string Description { get; set; }
+    }
+}
+
+2.  Personalización de Botones con Estilos.
+En este ejemplo, definimos un estilo personalizado para los botones en la aplicación. El estilo cambia el color de fondo y los márgenes de los botones.
+
+XAML:
+
+<Window x:Class="StyledButtonsApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Styled Buttons" Width="400" Height="300">
+    
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="SkyBlue"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+    </Window.Resources>
+    
+    <Grid>
+        <Button Content="Guardar" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Button Content="Cancelar" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+    </Grid>
+</Window>
+
+C#:
+
+using System.Windows;
+
+namespace StyledButtonsApp
+{
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+    }
+}
+
+CONTROL DE PRESENTACIONES
+Supongamos que estamos trabajando en una aplicación de administración de empleados:
+
+1.  Lista de Empleados con DataGrid
+En este ejemplo, utilizamos un DataGrid para mostrar una lista de empleados con sus nombres, cargos y salarios. Los datos se cargan en el DataGrid mediante código.
+
+XAML:
+
+<Window x:Class="EmployeeManagementApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Employee Management" Width="600" Height="400">
+    
+    <Grid>
+        <DataGrid Name="EmployeeDataGrid" AutoGenerateColumns="True" Margin="10"/>
+    </Grid>
+</Window>
+
+C#:
+
+using System.Collections.Generic;
+using System.Windows;
+
+namespace EmployeeManagementApp
+{
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+            LoadEmployees();
+        }
+
+        private void LoadEmployees()
+        {
+            List<Employee> employees = new List<Employee>
+            {
+                new Employee { Name = "Juan Pérez", Position = "Desarrollador", Salary = 50000 },
+                new Employee { Name = "María González", Position = "Diseñador", Salary = 45000 },
+                new Employee { Name = "Carlos Ramírez", Position = "Gerente", Salary = 75000 }
+            };
+
+            EmployeeDataGrid.ItemsSource = employees;
+        }
+    }
+
+    public class Employee
+    {
+        public string Name { get; set; }
+        public string Position { get; set; }
+        public decimal Salary { get; set; }
+    }
+}
+
+2. Detalles de Empleado con TextBlocks
+En este ejemplo, utilizamos varios TextBlock para mostrar los detalles de un empleado seleccionado en un ComboBox. Cuando se selecciona un empleado, sus detalles se muestran en los TextBlock
+
+XAML:
+
+<Window x:Class="EmployeeDetailsApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Employee Details" Width="400" Height="300">
+    
+    <Grid>
+        <ComboBox Name="EmployeeComboBox" Width="200" HorizontalAlignment="Center" VerticalAlignment="Top"
+                  DisplayMemberPath="Name" SelectedValuePath="Name" SelectionChanged="EmployeeComboBox_SelectionChanged"/>
+        
+        <TextBlock Name="PositionTextBlock" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock Name="SalaryTextBlock" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+    </Grid>
+</Window>
+
+C#:
+
+using System;
+using System.Collections.Generic;
+using System.Windows;
+
+namespace EmployeeDetailsApp
+{
+    public partial class MainWindow : Window
+    {
+        private List<Employee> employees;
+
+        public MainWindow()
+        {
+            InitializeComponent();
+            LoadEmployees();
+        }
+
+        private void LoadEmployees()
+        {
+            employees = new List<Employee>
+            {
+                new Employee { Name = "Juan Pérez", Position = "Desarrollador", Salary = 50000 },
+                new Employee { Name = "María González", Position = "Diseñador", Salary = 45000 },
+                new Employee { Name = "Carlos Ramírez", Position = "Gerente", Salary = 75000 }
+            };
+
+            EmployeeComboBox.ItemsSource = employees;
+        }
+
+        private void EmployeeComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            Employee selectedEmployee = (Employee)EmployeeComboBox.SelectedItem;
+            if (selectedEmployee != null)
+            {
+                PositionTextBlock.Text = $"Cargo: {selectedEmployee.Position}";
+                SalaryTextBlock.Text = $"Salario: {selectedEmployee.Salary:C}";
+            }
+        }
+    }
+
+    public class Employee
+    {
+        public string Name { get; set; }
+        public string Position { get; set; }
+        public decimal Salary { get; set; }
+    }
+}
+
+
+CONTROL DE EDICION DE TEXTO
+Supongamos que estamos trabajando en una aplicación de edición de documentos:
+
+1.  Editor de Texto Básico
+En este ejemplo, utilizamos un TextBox para permitir al usuario editar y guardar contenido de texto.
+
+XAML:
+
+<Window x:Class="TextEditorApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Text Editor" Width="600" Height="400">
+    
+    <Grid>
+        <TextBox Name="EditorTextBox" Margin="10" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
+        
+        <Button Content="Guardar" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10"
+                Click="GuardarButton_Click"/>
+    </Grid>
+</Window>
+
+C#:
+
+using System.IO;
+using System.Windows;
+
+namespace TextEditorApp
+{
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        private void GuardarButton_Click(object sender, RoutedEventArgs e)
+        {
+            string content = EditorTextBox.Text;
+            File.WriteAllText("documento.txt", content);
+            MessageBox.Show("Documento guardado correctamente.");
+        }
+    }
+}
+
+2. Búsqueda y Reemplazo de Texto
+En este ejemplo, utilizamos dos TextBox para permitir al usuario ingresar texto de búsqueda y reemplazo, y un TextBlock para mostrar el contenido del documento. Un botón realiza la búsqueda y reemplazo en el contenido del TextBlock.
+
+XAML:
+
+<Window x:Class="TextSearchReplaceApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Text Search & Replace" Width="600" Height="400">
+    
+    <Grid>
+        <TextBox Name="SearchTextBox" PlaceholderText="Buscar" Margin="10"/>
+        <TextBox Name="ReplaceTextBox" PlaceholderText="Reemplazar con" Margin="10" VerticalAlignment="Top"/>
+        
+        <Button Content="Buscar y Reemplazar" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10"
+                Click="BuscarReemplazarButton_Click"/>
+        
+        <TextBlock Name="DocumentTextBlock" TextWrapping="Wrap" Margin="10" VerticalScrollBarVisibility="Auto"/>
+    </Grid>
+</Window>
+
+C#:
+
+using System.Windows;
+using System.Windows.Documents;
+
+namespace TextSearchReplaceApp
+{
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+            LoadDocument();
+        }
+
+        private void LoadDocument()
+        {
+            // Cargar contenido de ejemplo en el TextBlock.
+            DocumentTextBlock.Inlines.Add(new Run("Lorem ipsum dolor sit amet, consectetur adipiscing elit."));
+            // ...
+        }
+
+        private void BuscarReemplazarButton_Click(object sender, RoutedEventArgs e)
+        {
+            string searchText = SearchTextBox.Text;
+            string replaceText = ReplaceTextBox.Text;
+
+            // Realizar búsqueda y reemplazo en el contenido del TextBlock.
+            if (DocumentTextBlock.Text.Contains(searchText))
+            {
+                DocumentTextBlock.Text = DocumentTextBlock.Text.Replace(searchText, replaceText);
+            }
+            else
+            {
+                MessageBox.Show("Texto no encontrado.");
+            }
+        }
+    }
+}
+
+
+CONTROL DE SELECCION
+Supongamos que estamos trabajando en una aplicación de gestión de tareas:
+
+1. Selección de Tareas con ListBox
+
+En este ejemplo, utilizamos un ListBox para mostrar una lista de tareas y permitir que el usuario seleccione una tarea.
+
+XAML:
+
+<Window x:Class="TaskSelectionApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Task Selection" Width="400" Height="300">
+    
+    <Grid>
+        <ListBox Name="TaskListBox" Margin="10" SelectionChanged="TaskListBox_SelectionChanged">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Title}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        
+        <TextBlock Name="SelectedTaskTextBlock" Margin="10" VerticalAlignment="Bottom"/>
+    </Grid>
+</Window>
+
+C#:
+
+using System.Collections.Generic;
+using System.Windows;
+
+namespace TaskSelectionApp
+{
+    public partial class MainWindow : Window
+    {
+        private List<Task> tasks;
+
+        public MainWindow()
+        {
+            InitializeComponent();
+            LoadTasks();
+        }
+
+        private void LoadTasks()
+        {
+            tasks = new List<Task>
+            {
+                new Task { Title = "Comprar víveres" },
+                new Task { Title = "Hacer ejercicio" },
+                new Task { Title = "Llamar a mamá" }
+            };
+
+            TaskListBox.ItemsSource = tasks;
+        }
+
+        private void TaskListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            Task selectedTask = (Task)TaskListBox.SelectedItem;
+            if (selectedTask != null)
+            {
+                SelectedTaskTextBlock.Text = $"Tarea seleccionada: {selectedTask.Title}";
+            }
+        }
+    }
+
+    public class Task
+    {
+        public string Title { get; set; }
+    }
+}
+
+
+2. Selección de Categorías con RadioButton.
+En este ejemplo, utilizamos varios RadioButton para permitir al usuario seleccionar una categoría.
+
+XAML:
+
+<Window x:Class="CategorySelectionApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Category Selection" Width="300" Height="200">
+    
+    <StackPanel Margin="10">
+        <RadioButton Content="Trabajo" Name="WorkRadioButton" Margin="0,0,0,5" Checked="RadioButton_Checked"/>
+        <RadioButton Content="Personal" Name="PersonalRadioButton" Margin="0,0,0,5" Checked="RadioButton_Checked"/>
+        <RadioButton Content="Ocio" Name="LeisureRadioButton" Checked="RadioButton_Checked"/>
+        
+        <TextBlock Name="SelectedCategoryTextBlock" Margin="0,10,0,0"/>
+    </StackPanel>
+</Window>
+
+C#:
+
+using System.Windows;
+
+namespace CategorySelectionApp
+{
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            RadioButton selectedRadioButton = (RadioButton)sender;
+            if (selectedRadioButton != null && selectedRadioButton.IsChecked == true)
+            {
+                SelectedCategoryTextBlock.Text = $"Categoría seleccionada: {selectedRadioButton.Content}";
+            }
+        }
+    }
+}
+
+
+CONTROL DE ACCION
+
+Supongamos que estamos trabajando en una aplicación de lista de tareas:
+
+1. Marcado de Tareas como Completadas con CheckBox
+En este ejemplo, utilizamos un CheckBox para permitir al usuario marcar una tarea como completada.
+
+XAML:
+
+<Window x:Class="TaskCompletionApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Task Completion" Width="400" Height="300">
+    
+    <StackPanel Margin="10">
+        <TextBlock Text="Lista de Tareas" FontSize="18" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+        
+        <ListBox Name="TaskListBox">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox Name="CompletionCheckBox" IsChecked="{Binding IsCompleted}" Margin="0,0,10,0"
+                                  Checked="CompletionCheckBox_Checked"/>
+                        <TextBlock Text="{Binding Title}" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </StackPanel>
+</Window>
+
+
+C#:
+
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Windows;
+
+namespace TaskCompletionApp
+{
+    public partial class MainWindow : Window
+    {
+        public ObservableCollection<Task> Tasks { get; set; }
+
+        public MainWindow()
+        {
+            InitializeComponent();
+            DataContext = this;
+            LoadTasks();
+        }
+
+        private void LoadTasks()
+        {
+            Tasks = new ObservableCollection<Task>
+            {
+                new Task { Title = "Comprar víveres" },
+                new Task { Title = "Hacer ejercicio" },
+                new Task { Title = "Llamar a mamá" }
+            };
+
+            TaskListBox.ItemsSource = Tasks;
+        }
+
+        private void CompletionCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            CheckBox checkBox = (CheckBox)sender;
+            Task task = (Task)checkBox.DataContext;
+            if (task != null)
+            {
+                task.IsCompleted = checkBox.IsChecked ?? false;
+            }
+        }
+    }
+
+    public class Task : INotifyPropertyChanged
+    {
+        private bool _isCompleted;
+
+        public string Title { get; set; }
+
+        public bool IsCompleted
+        {
+            get { return _isCompleted; }
+            set
+            {
+                _isCompleted = value;
+                OnPropertyChanged("IsCompleted");
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+}
+
+
+2. Apertura de Páginas Web con Hyperlink
+En este ejemplo, utilizamos un Hyperlink para permitir al usuario abrir una página web al hacer clic en el enlace.
+
+XAML:
+
+<Window x:Class="WebLinkApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Web Link" Width="300" Height="200">
+    
+    <StackPanel Margin="10">
+        <TextBlock Text="Enlaces Web" FontSize="18" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+        
+        <TextBlock Text="Visita nuestro sitio web:" Margin="0,0,0,5"/>
+        <Hyperlink Name="WebsiteLink" NavigateUri="https://www.ejemplo.com" RequestNavigate="WebsiteLink_RequestNavigate">
+            <TextBlock Text="www.ejemplo.com" TextDecorations="Underline" Foreground="Blue"/>
+        </Hyperlink>
+    </StackPanel>
+</Window>
+
+C#:
+
+using System.Diagnostics;
+using System.Windows;
+using System.Windows.Navigation;
+
+namespace WebLinkApp
+{
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        private void WebsiteLink_RequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            string url = e.Uri.AbsoluteUri;
+            Process.Start(new ProcessStartInfo(url));
+            e.Handled = true;
+        }
+    }
+}
+
+
+
+
+
