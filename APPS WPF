@@ -4,7 +4,7 @@ CONTROL DE VENTANA.
 
 1. Botón de Guardar y Botón de Cerrar
 
-XAML:
+CODIGO XAML:
 
 <Window x:Class="NoteTakingApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -22,7 +22,8 @@ XAML:
     </Grid>
 </Window>
 
-C#:
+
+CODIGO C#:
 
 using System.Windows;
 
@@ -49,7 +50,7 @@ namespace NoteTakingApp
 
 2. Reproductor Multimedia con Control de Volumen y Barra de Progreso
 
-XAML:
+CODIGO XAML:
 
 <Window x:Class="MediaPlayerApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -66,7 +67,8 @@ XAML:
     </Grid>
 </Window>
 
-C#:
+
+CODIGO C#:
 
 using System;
 using System.Windows;
@@ -116,7 +118,7 @@ CONTROL DE DISEÑO
 
 En este ejemplo, utilizamos un Grid para organizar una lista de tareas. Cada tarea consta de un título y una descripción. El diseño se configura utilizando filas y columnas en el Grid.
 
-XAML:
+CODIGO XAML:
 
 <Window x:Class="TaskManagerApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -144,7 +146,8 @@ XAML:
     </Grid>
 </Window>
 
-C#:
+
+CODIGO C#:
 
 using System.Collections.Generic;
 using System.Windows;
@@ -179,10 +182,11 @@ namespace TaskManagerApp
     }
 }
 
+
 2.  Personalización de Botones con Estilos.
 En este ejemplo, definimos un estilo personalizado para los botones en la aplicación. El estilo cambia el color de fondo y los márgenes de los botones.
 
-XAML:
+CODIGO XAML:
 
 <Window x:Class="StyledButtonsApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -203,7 +207,8 @@ XAML:
     </Grid>
 </Window>
 
-C#:
+
+CODIGO C#:
 
 using System.Windows;
 
@@ -218,13 +223,15 @@ namespace StyledButtonsApp
     }
 }
 
+
 CONTROL DE PRESENTACIONES
 Supongamos que estamos trabajando en una aplicación de administración de empleados:
 
 1.  Lista de Empleados con DataGrid
 En este ejemplo, utilizamos un DataGrid para mostrar una lista de empleados con sus nombres, cargos y salarios. Los datos se cargan en el DataGrid mediante código.
 
-XAML:
+
+CODIGO XAML:
 
 <Window x:Class="EmployeeManagementApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -236,7 +243,8 @@ XAML:
     </Grid>
 </Window>
 
-C#:
+
+CODIGO C#:
 
 using System.Collections.Generic;
 using System.Windows;
@@ -272,10 +280,11 @@ namespace EmployeeManagementApp
     }
 }
 
+
 2. Detalles de Empleado con TextBlocks
 En este ejemplo, utilizamos varios TextBlock para mostrar los detalles de un empleado seleccionado en un ComboBox. Cuando se selecciona un empleado, sus detalles se muestran en los TextBlock
 
-XAML:
+CODIGO XAML:
 
 <Window x:Class="EmployeeDetailsApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -291,7 +300,8 @@ XAML:
     </Grid>
 </Window>
 
-C#:
+
+CODIGO C#:
 
 using System;
 using System.Collections.Generic;
@@ -347,7 +357,7 @@ Supongamos que estamos trabajando en una aplicación de edición de documentos:
 1.  Editor de Texto Básico
 En este ejemplo, utilizamos un TextBox para permitir al usuario editar y guardar contenido de texto.
 
-XAML:
+CODIGO XAML:
 
 <Window x:Class="TextEditorApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -362,7 +372,8 @@ XAML:
     </Grid>
 </Window>
 
-C#:
+
+CODIGO C#:
 
 using System.IO;
 using System.Windows;
@@ -385,10 +396,11 @@ namespace TextEditorApp
     }
 }
 
+
 2. Búsqueda y Reemplazo de Texto
 En este ejemplo, utilizamos dos TextBox para permitir al usuario ingresar texto de búsqueda y reemplazo, y un TextBlock para mostrar el contenido del documento. Un botón realiza la búsqueda y reemplazo en el contenido del TextBlock.
 
-XAML:
+CODIGO XAML:
 
 <Window x:Class="TextSearchReplaceApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -406,7 +418,8 @@ XAML:
     </Grid>
 </Window>
 
-C#:
+
+CODIGO C#:
 
 using System.Windows;
 using System.Windows.Documents;
@@ -454,7 +467,7 @@ Supongamos que estamos trabajando en una aplicación de gestión de tareas:
 
 En este ejemplo, utilizamos un ListBox para mostrar una lista de tareas y permitir que el usuario seleccione una tarea.
 
-XAML:
+CODIGO XAML:
 
 <Window x:Class="TaskSelectionApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -474,7 +487,8 @@ XAML:
     </Grid>
 </Window>
 
-C#:
+
+CODIGO C#:
 
 using System.Collections.Generic;
 using System.Windows;
@@ -523,7 +537,7 @@ namespace TaskSelectionApp
 2. Selección de Categorías con RadioButton.
 En este ejemplo, utilizamos varios RadioButton para permitir al usuario seleccionar una categoría.
 
-XAML:
+CODIGO XAML:
 
 <Window x:Class="CategorySelectionApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -539,7 +553,8 @@ XAML:
     </StackPanel>
 </Window>
 
-C#:
+
+CODIGO C#:
 
 using System.Windows;
 
@@ -571,7 +586,7 @@ Supongamos que estamos trabajando en una aplicación de lista de tareas:
 1. Marcado de Tareas como Completadas con CheckBox
 En este ejemplo, utilizamos un CheckBox para permitir al usuario marcar una tarea como completada.
 
-XAML:
+CODIGO XAML:
 
 <Window x:Class="TaskCompletionApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -596,7 +611,7 @@ XAML:
 </Window>
 
 
-C#:
+CODIGO C#:
 
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -667,7 +682,7 @@ namespace TaskCompletionApp
 2. Apertura de Páginas Web con Hyperlink
 En este ejemplo, utilizamos un Hyperlink para permitir al usuario abrir una página web al hacer clic en el enlace.
 
-XAML:
+CODIGO XAML:
 
 <Window x:Class="WebLinkApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -684,7 +699,8 @@ XAML:
     </StackPanel>
 </Window>
 
-C#:
+
+CODIGO C#:
 
 using System.Diagnostics;
 using System.Windows;
